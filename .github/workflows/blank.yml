@@ -39,5 +39,6 @@ jobs:
     - name: Print JAVA_HOME variables
       run: |
         set | grep '^JAVA_HOME'
+        set | grep '^VAR'
         echo "Var without dot: $VAR_NO_DOT"
-        echo "Var with dot: $VAR.WITH.DOT"
+        echo "Var with dot: ${VAR.WITH.DOT}"
