@@ -43,3 +43,4 @@ jobs:
         echo "Var without dot: $VAR_NO_DOT"
         echo -n "Var with dot: "
         perl -e 'print $ENV{"VAR.WITH.DOT"}'
+        printenv
