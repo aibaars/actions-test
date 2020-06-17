@@ -41,4 +41,5 @@ jobs:
         set | grep '^JAVA_HOME'
         set | grep '^VAR'
         echo "Var without dot: $VAR_NO_DOT"
-        echo "Var with dot: ${VAR.WITH.DOT}"
+        perl -e 'print $ENV{"VAR.WITH.DOT"}'
+        echo "Var with dot: ${VAR.WITH.DOT}" || true
