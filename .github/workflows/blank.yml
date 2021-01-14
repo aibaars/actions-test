@@ -21,6 +21,9 @@ jobs:
     - run: |
         apt update
         apt install -y strace
+    - run: |
+        strace env LD_PRELOAD='/__t/CodeQL/0.0.0-20201127/x64/codeql/tools/linux64/${LIB}trace.so' bash -c ls
+
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v1
