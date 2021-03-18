@@ -30,7 +30,6 @@ jobs:
      options: -uroot
      env:
        SEMMLE_DEPTRACE_SOCKET: /opt/deptrace/deptrace.socket
-       ODASA_TRACER_CONFIGURATION: /opt/work/odasa_tracer_configuration
     name: Analyze
     runs-on: ubuntu-latest
 
