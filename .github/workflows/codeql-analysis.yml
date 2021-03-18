@@ -24,6 +24,9 @@ jobs:
   analyze:
     container:
       image: ghcr.io/aibaars/top-cpp
+      credentials:
+       username: aibaars
+       password: ${{ secrets.ghcr_token }}
       options: --entrypoint /opt/deptrace/deptrace
     name: Analyze
     runs-on: ubuntu-latest
