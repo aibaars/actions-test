@@ -23,11 +23,13 @@ on:
 jobs:
   analyze:
     container:
-      image: ghcr.io/aibaars/top-cpp
-      credentials:
+     image: ghcr.io/aibaars/top-cpp
+     credentials:
        username: aibaars
        password: ${{ secrets.ghcr_token }}
-      options: --entrypoint /opt/deptrace/deptrace
+     env:
+       SEMMLE_DEPTRACE_SOCKET: /opt/deptrace/deptrace.socket
+       ODASA_TRACER_CONFIGURATION: /opt/work/odasa_tracer_configuration
     name: Analyze
     runs-on: ubuntu-latest
 
