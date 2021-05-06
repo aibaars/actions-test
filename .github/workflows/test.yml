@@ -16,7 +16,8 @@ jobs:
     - name: Clone
       run: |
         echo '${{ secrets.SSH_KEY }}' > "${{ runner.temp }}/ssh_key"
-        chmod 600 "${{ runner.temp }}/ssh_key"
+        cmd /c icacls "${{ runner.temp }}/ssh_key" /inheritance:r
+        cmd /c icacls "${{ runner.temp }}/ssh_key" /grant:r "%username%":"(R)"
         git clone git@github.com:github/lgtm-mirror-amazon-cognito-js.git
       env:
         GIT_SSH_COMMAND: '"C:\Windows\System32\OpenSSH\ssh.exe" -o StrictHostKeyChecking=no -i "${{ runner.temp }}/ssh_key" -o "UserKnownHostsFile=${{ runner.temp }}/known_hosts"'
