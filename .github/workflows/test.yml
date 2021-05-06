@@ -15,7 +15,8 @@ jobs:
         ssh-key: ${{ secrets.SSH_KEY }}
         repository: github/semmle-resources
     - name: Update Path
-      run: echo "##[add-path]${{ github.workspace }}/msys/bin"
+      run: echo "${{ github.workspace }}/msys/bin" >> ${GITHUB_PATH}
+      shell: bash
     - name: Setup key
       run: |
         echo ${Path}
