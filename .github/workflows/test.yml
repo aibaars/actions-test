@@ -14,21 +14,19 @@ jobs:
         ssh-strict: false
         ssh-key: ${{ secrets.SSH_KEY }}
         repository: github/semmle-resources
-   
+    - name: Update Path
+      run: echo "##[add-path]${{ github.workspace }}/msys/bin"
     - name: Setup key
       run: |
-        echo %Path%
+        echo ${Path}
         where make
         make --help
         dir ${{ github.workspace }}/msys/bin 
         echo '${{ secrets.SSH_KEY }}' > "${{ runner.temp }}/ssh_key"
         cmd /c icacls "${{ runner.temp }}/ssh_key" /inheritance:r
-      env:
-        PATH: "${{ github.workspace }}/msys/bin;${{ env.Path }}"     
     - name: Clone with OpenSSH
       env:
         GIT_SSH_COMMAND: '"C:\Windows\System32\OpenSSH\ssh.exe" -v -o StrictHostKeyChecking=no -i "${{ runner.temp }}/ssh_key" -o "UserKnownHostsFile=${{ runner.temp }}/known_hosts"'
-        PATH: "${{ github.workspace }}/msys/bin;${{ env.Path }}"     
       run:
         git clone git@github.com:github/lgtm-mirror-amazon-cognito-js.git one
       shell: bash
@@ -36,7 +34,6 @@ jobs:
     - name: Clone with SSH from PATH
       env:
         GIT_SSH_COMMAND: 'ssh -v -o StrictHostKeyChecking=no -i "${{ runner.temp }}/ssh_key" -o "UserKnownHostsFile=${{ runner.temp }}/known_hosts"'
-        PATH: "${{ github.workspace }}/msys/bin;${{ env.Path }}"     
       run:
         git clone git@github.com:github/lgtm-mirror-amazon-cognito-js.git two
       shell: bash
@@ -44,7 +41,6 @@ jobs:
     - name: Clone with make
       env:
         GIT_SSH_COMMAND: 'ssh -v -o StrictHostKeyChecking=no -i "${{ runner.temp }}/ssh_key" -o "UserKnownHostsFile=${{ runner.temp }}/known_hosts"'
-        PATH: "${{ github.workspace }}/msys/bin;${{ env.Path }}"     
       run: |
         echo $'all:\n\tgit clone git@github.com:github/lgtm-mirror-amazon-cognito-js.git three' > Makefile 
         make
