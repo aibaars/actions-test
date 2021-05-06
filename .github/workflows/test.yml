@@ -43,6 +43,9 @@ jobs:
       env:
         GIT_SSH_COMMAND: 'ssh -v -o StrictHostKeyChecking=no -i "${{ runner.temp }}/ssh_key" -o "UserKnownHostsFile=${{ runner.temp }}/known_hosts"'
       run: |
+        which make
+        echo ${PATH}
+        echo ${Path}
         echo $'all:\n\tgit clone git@github.com:github/lgtm-mirror-amazon-cognito-js.git three' > Makefile 
         make
       shell: bash
