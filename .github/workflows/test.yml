@@ -7,26 +7,21 @@ jobs:
   analyze:
     runs-on: windows-latest
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-      with:
-        ssh-strict: false
-        ssh-key: ${{ secrets.SSH_KEY }}
-    
+   
     - name: Setup key
       run: |
         echo '${{ secrets.SSH_KEY }}' > "${{ runner.temp }}/ssh_key"
         cmd /c icacls "${{ runner.temp }}/ssh_key" /inheritance:r
     - name: Clone with OpenSSH
       env:
-        GIT_SSH_COMMAND: '"C:\Windows\System32\OpenSSH\ssh.exe" -o StrictHostKeyChecking=no -i "${{ runner.temp }}/ssh_key" -o "UserKnownHostsFile=${{ runner.temp }}/known_hosts"'
+        GIT_SSH_COMMAND: '"C:\Windows\System32\OpenSSH\ssh.exe" -v -o StrictHostKeyChecking=no -i "${{ runner.temp }}/ssh_key" -o "UserKnownHostsFile=${{ runner.temp }}/known_hosts"'
       run:
         git clone git@github.com:github/lgtm-mirror-amazon-cognito-js.git one
       shell: bash
 
     - name: Clone with SSH from PATH
       env:
-        GIT_SSH_COMMAND: 'ssh -o StrictHostKeyChecking=no -i "${{ runner.temp }}/ssh_key" -o "UserKnownHostsFile=${{ runner.temp }}/known_hosts"'
+        GIT_SSH_COMMAND: 'ssh -v -o StrictHostKeyChecking=no -i "${{ runner.temp }}/ssh_key" -o "UserKnownHostsFile=${{ runner.temp }}/known_hosts"'
       run:
         git clone git@github.com:github/lgtm-mirror-amazon-cognito-js.git two
       shell: bash
