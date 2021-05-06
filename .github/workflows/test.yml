@@ -6,8 +6,6 @@ on:
 jobs:
   analyze:
     runs-on: windows-latest
-    env:
-        PATH: "${{ github.workspace }}/msys/bin;${{ env.PATH }}"     
     steps:
     
     - name: Checkout repository
@@ -25,9 +23,12 @@ jobs:
         dir ${{ github.workspace }}/msys/bin 
         echo '${{ secrets.SSH_KEY }}' > "${{ runner.temp }}/ssh_key"
         cmd /c icacls "${{ runner.temp }}/ssh_key" /inheritance:r
+      env:
+        PATH: "${{ github.workspace }}/msys/bin;${{ env.PATH }}"     
     - name: Clone with OpenSSH
       env:
         GIT_SSH_COMMAND: '"C:\Windows\System32\OpenSSH\ssh.exe" -v -o StrictHostKeyChecking=no -i "${{ runner.temp }}/ssh_key" -o "UserKnownHostsFile=${{ runner.temp }}/known_hosts"'
+        PATH: "${{ github.workspace }}/msys/bin;${{ env.PATH }}"     
       run:
         git clone git@github.com:github/lgtm-mirror-amazon-cognito-js.git one
       shell: bash
@@ -35,9 +36,20 @@ jobs:
     - name: Clone with SSH from PATH
       env:
         GIT_SSH_COMMAND: 'ssh -v -o StrictHostKeyChecking=no -i "${{ runner.temp }}/ssh_key" -o "UserKnownHostsFile=${{ runner.temp }}/known_hosts"'
+        PATH: "${{ github.workspace }}/msys/bin;${{ env.PATH }}"     
       run:
         git clone git@github.com:github/lgtm-mirror-amazon-cognito-js.git two
       shell: bash
+
+    - name: Clone with make
+      env:
+        GIT_SSH_COMMAND: 'ssh -v -o StrictHostKeyChecking=no -i "${{ runner.temp }}/ssh_key" -o "UserKnownHostsFile=${{ runner.temp }}/known_hosts"'
+        PATH: "${{ github.workspace }}/msys/bin;${{ env.PATH }}"     
+      run: |
+        echo $'all:\n\tgit clone git@github.com:github/lgtm-mirror-amazon-cognito-js.git three' > Makefile 
+        make
+      shell: bash
+
 
 
  
