@@ -13,3 +13,4 @@ script:
 - git clone https://github.com/apache/commons-io
 - gh codeql database create -l java -s commons-io commons-io-db
 - gh codeql database analyze commons-io-db
+
