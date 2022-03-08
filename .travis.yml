@@ -1,0 +1,13 @@
+dist: xenial
+os: linux
+language: shell
+
+script:
+- stty rows 80
+- stty cols 80
+- wget -qOcodeql-linux64.zip https://github.com/github/codeql-cli-binaries/releases/download/v2.8.2/codeql-linux64.zip
+- unzip -q codeql-linux64.zip
+- git clone https://github.com/sorbet/sorbet
+- codeql/codeql database create -l ruby -s sorbet sorbet-db
+- codeql/codeql pack download codeql/ruby-queries
+- codeql/codeql database analyze sorbet-db --format=csv --output results.csv
