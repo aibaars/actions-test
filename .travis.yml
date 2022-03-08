@@ -3,7 +3,7 @@ os: linux
 language: shell
 
 script:
-- stty rows 80
+- stty rows 1
 - stty cols 80
 - wget -qOcodeql-linux64.zip https://github.com/github/codeql-cli-binaries/releases/download/v2.8.2/codeql-linux64.zip
 - unzip -q codeql-linux64.zip
