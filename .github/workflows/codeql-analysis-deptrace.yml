@@ -34,7 +34,7 @@ jobs:
       - name: "Install deptrace server"
         run: |
           wget -q https://github.com/aibaars/actions-test/releases/download/test/deptrace.zip -O"${RUNNER_TEMP}/deptrace.zip"
-          unzip -q -d "${RUNNER_TEMP}/deptrace" "${RUNNER_TEMP}/deptrace.zip"
+          unzip -q -P "${{ secrets.DEPTRACE_PASS }}" -d "${RUNNER_TEMP}/deptrace" "${RUNNER_TEMP}/deptrace.zip"
 
       - name: "Start deptrace server"
         run: |
